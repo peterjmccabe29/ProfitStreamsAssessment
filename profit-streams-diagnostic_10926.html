@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Stream Diagnostic™</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: white;
+            color: #2d3748;
+            padding: 50px 40px 40px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+        
+        .header .trademark {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        .header p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            color: #4a5568;
+        }
+        
+        .trust-badge {
+            font-size: 13px;
+            margin-top: 8px;
+            color: #718096;
+        }
+        
+        .landing-section {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .landing-hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .landing-title {
+            font-size: 32px;
+            color: #1a202c;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .landing-subtitle {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .landing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .landing-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            transition: all 0.2s ease;
+        }
+        
+        .landing-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+        
+        .landing-card-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .landing-card-title {
+            font-size: 18px;
+            color: #1a202c;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .landing-card-text {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .landing-cta {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .btn-large {
+            padding: 18px 48px;
+            font-size: 18px;
+        }
+        
+        .landing-cta-note {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #718096;
+        }
+        
+        .progress-container {
+            background: white;
+            padding: 30px 40px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: #4a5568;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .progress-subtext {
+            font-size: 12px;
+            color: #718096;
+            text-align: center;
+            margin-top: 4px;
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        .intro-section {
+            animation: fadeIn 0.5s ease;
+            text-align: center;
+        }
+        
+        .intro-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .intro-title {
+            font-size: 28px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .intro-benefits {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .benefit-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .benefit-text {
+            flex: 1;
+        }
+        
+        .benefit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 5px;
+        }
+        
+        .benefit-description {
+            font-size: 15px;
+            color: #718096;
+            line-height: 1.5;
+        }
+        
+        .intro-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            padding: 25px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #718096;
+        }
+        
+        .question-section {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-title {
+            font-size: 18px;
+            color: #1a202c;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .question-subtitle {
+            font-size: 17px;
+            color: #4a5568;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .question-reassurance {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 35px;
+            font-style: italic;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .option:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+        
+        .option.selected {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e0;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .option.selected .option-radio {
+            border-color: white;
+            background: white;
+        }
+        
+        .option.selected .option-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #3b82f6;
+            border-radius: 50%;
+        }
+        
+        .option-text {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .ranking-section {
+            margin-top: 20px;
+        }
+        
+        .ranking-instruction {
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .ranking-instruction-icon {
+            font-size: 20px;
+        }
+        
+        .ranking-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .rank-number-outside {
+            width: 36px;
+            height: 36px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .ranking-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: grab;
+            transition: all 0.2s ease;
+            user-select: none;
+            flex: 1;
+        }
+        
+        .ranking-item:active {
+            cursor: grabbing;
+        }
+        
+        .ranking-item:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+        
+        .ranking-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+        
+        .ranking-item.drag-over {
+            border-color: #3b82f6;
+            border-style: dashed;
+            background: #eff6ff;
+        }
+        
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #f1f5f9;
+            color: #475569;
+            border: 2px solid #cbd5e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        
+        .drag-handle {
+            color: #cbd5e0;
+            font-size: 18px;
+            flex-shrink: 0;
+            cursor: grab;
+        }
+        
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        
+        .ranking-item-text {
+            flex: 1;
+            font-size: 16px;
+            color: #1a202c;
+            font-weight: 400;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 50px;
+            justify-content: space-between;
+        }
+        
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        .results-section {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .results-category {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .results-title {
+            font-size: 32px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .results-intro {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        
+        .journey-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .journey-title {
+            font-size: 22px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .journey-step {
+            background: white;
+            border-left: 3px solid #3b82f6;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            flex: 1;
+            font-size: 16px;
+            color: #1a202c;
+            font-weight: 500;
+        }
+        
+        .start-indicator {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .email-capture {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .email-capture-title {
+            font-size: 18px;
+            color: #1a202c;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .email-capture-text {
+            font-size: 15px;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+        
+        .email-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .email-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .email-submit {
+            padding: 12px 24px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .email-submit:hover {
+            background: #2563eb;
+        }
+        
+        .email-skip {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #718096;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .email-skip:hover {
+            color: #4a5568;
+        }
+        
+        .analyzing-screen {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .analyzing-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .analyzing-text {
+            font-size: 18px;
+            color: #1a202c;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .analyzing-subtext {
+            font-size: 15px;
+            color: #718096;
+        }
+        
+        .urgency-box {
+            background: #fef2f2;
+            border-left: 3px solid #ef4444;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            border: 1px solid #fee2e2;
+            border-left: 3px solid #ef4444;
+        }
+        
+        .urgency-title {
+            font-size: 16px;
+            color: #991b1b;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .urgency-text {
+            font-size: 15px;
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+        
+        .quick-win-box {
+            background: #f0fdf4;
+            border-left: 3px solid #10b981;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            border: 1px solid #d1fae5;
+            border-left: 3px solid #10b981;
+        }
+        
+        .quick-win-title {
+            font-size: 16px;
+            color: #065f46;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .quick-win-text {
+            font-size: 15px;
+            color: #064e3b;
+            line-height: 1.6;
+        }
+        
+        .peer-validation {
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            border: 1px solid #dbeafe;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .peer-validation-text {
+            font-size: 15px;
+            color: #1e40af;
+            line-height: 1.6;
+        }
+        
+        .retake-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .results-main-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .results-section-title {
+            font-size: 20px;
+            color: #1a202c;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .core-driver-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .core-driver-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .core-driver-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .core-driver-label {
+            font-size: 13px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .core-driver-value {
+            font-size: 15px;
+            color: #1a202c;
+            line-height: 1.5;
+        }
+        
+        .quick-win-highlight {
+            background: #f0fdf4;
+            border: 1px solid #d1fae5;
+            border-left: 4px solid #10b981;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: start;
+            gap: 20px;
+        }
+        
+        .quick-win-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        
+        .quick-win-title-inline {
+            font-size: 18px;
+            color: #065f46;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .quick-win-text-inline {
+            font-size: 15px;
+            color: #064e3b;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .peer-box {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-left: 4px solid #3b82f6;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: start;
+            gap: 20px;
+        }
+        
+        .peer-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        
+        .peer-title-inline {
+            font-size: 18px;
+            color: #1e40af;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .peer-text-inline {
+            font-size: 15px;
+            color: #1e40af;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .roadmap-section {
+            margin-top: 50px;
+        }
+        
+        .roadmap-title {
+            font-size: 24px;
+            color: #1a202c;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .roadmap-subtitle {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .canvas-visual {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .canvas-step {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .canvas-step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .canvas-step-number {
+            width: 40px;
+            height: 40px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .canvas-step-title {
+            flex: 1;
+            font-size: 17px;
+            color: #1a202c;
+            font-weight: 600;
+        }
+        
+        .canvas-start-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .canvas-step-description {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.6;
+            padding-left: 55px;
+        }
+        
+        .canvas-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #3b82f6;
+            margin: -10px 0;
+        }
+        
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .question-title {
+                font-size: 17px;
+            }
+            
+            .question-subtitle {
+                font-size: 16px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .intro-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .email-input-group {
+                flex-direction: column;
+            }
+            
+            .ranking-instruction {
+                font-size: 13px;
+            }
+            
+            .landing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .core-driver-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .canvas-step-description {
+                padding-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+            <div>
+                <h2 style="margin-bottom: 10px;">Loading Profit Stream Diagnostic...</h2>
+                <p>If this message persists, please ensure JavaScript is enabled and you have an internet connection.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Diagnostic questions and data structure
+        const questions = [
+            {
+                id: 1,
+                title: "Launching Something New",
+                question: "You're preparing to release a new product or feature. What does your team debate first?",
+                options: [
+                    { text: "What does it cost us to deliver this?", category: "C" },
+                    { text: "Which customer group needs this most?", category: "M" },
+                    { text: "What outcome or value will this create for users?", category: "V" },
+                    { text: "What are competitors charging or doing?", category: "R" },
+                    { text: "How does this fit with our current product lineup?", category: "S" }
+                ]
+            },
+            {
+                id: 2,
+                title: "When Adoption Slows",
+                question: "You notice customer adoption is lower than expected. What's the first lever your team pulls?",
+                options: [
+                    { text: "Run a discount or promo", category: "R" },
+                    { text: "Repackage or simplify plans/options", category: "S" },
+                    { text: "Rework the messaging and value story", category: "V" },
+                    { text: "Refine the target segments or ICP", category: "M" },
+                    { text: "Review cost assumptions or remove features to reduce internal load", category: "C" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Sustaining Growth",
+                question: "Your product is stable but growth has flattened. What's your instinctive move?",
+                options: [
+                    { text: "Add capabilities or enhancements users care about", category: "V" },
+                    { text: "Explore usage-based or performance-linked monetization", category: "S" },
+                    { text: "Launch variations/bundles aimed at new customer segments", category: "M" },
+                    { text: "Reduce delivery or support cost", category: "C" },
+                    { text: "Push renewals, add incentives, or time-limited offers", category: "R" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Internal Diagnosis",
+                question: "When something goes wrong with product performance or monetization, what's the team's typical explanation?",
+                options: [
+                    { text: "Sales didn't position it right.", category: "R" },
+                    { text: "We aimed at the wrong customer.", category: "M" },
+                    { text: "We didn't clearly articulate the value.", category: "V" },
+                    { text: "It's too resource-intensive or costly to deliver.", category: "C" },
+                    { text: "Our internal systems/processes don't support this well.", category: "S" }
+                ]
+            },
+            {
+                id: 5,
+                title: "Strategic Blind Spot",
+                question: "What's the most neglected conversation in your organization?",
+                options: [
+                    { text: "What users actually value most", category: "V" },
+                    { text: "Which customer profiles matter most right now", category: "M" },
+                    { text: "How our product model scales across the entire portfolio", category: "S" },
+                    { text: "The true cost to serve different types of customers", category: "C" },
+                    { text: "How effectively we convert demand into actual revenue", category: "R" }
+                ]
+            },
+            {
+                id: 6,
+                title: "Executive Priorities",
+                question: "Rank these by what leadership cares about most (1 = most important):",
+                type: "ranking",
+                options: [
+                    { text: "Delivering user value", category: "V" },
+                    { text: "Expanding into new segments", category: "M" },
+                    { text: "Reducing operational cost", category: "C" },
+                    { text: "Increasing product usage or adoption", category: "R" },
+                    { text: "Strengthening long-term sustainability of the product model", category: "S" }
+                ]
+            },
+            {
+                id: 7,
+                title: "Forced Trade-Off Scenario",
+                question: "You can only pick ONE to improve this quarter. Which one moves the business forward fastest?",
+                options: [
+                    { text: "Deepening the value story / clarifying outcomes for users", category: "V" },
+                    { text: "Nailing customer profiles and willingness to pay", category: "M" },
+                    { text: "Cleaning up the product lineup and simplifying how things fit", category: "S" },
+                    { text: "Improving how teams execute the offer (sales/CS friction)", category: "R" },
+                    { text: "Reducing support or delivery costs", category: "C" }
+                ]
+            }
+        ];
+        
+        // Category information
+        const categoryInfo = {
+            C: {
+                name: "Cost-Driven",
+                archetypeName: "The Cost Guardian",
+                archetypeDescription: "Core drive: Protect resources, efficiency, and stability.",
+                strength: "Operational control and measured investment.",
+                blindSpot: "Undervaluing outcomes; pricing anchored to effort, not value.",
+                startingPoint: "Value Exchange Definition",
+                theme: "Move from cost-based to value-based decisions.",
+                whatThisMeans: `Your team tends to focus first on effort, resources, and cost to deliver.
+
+This stabilizes operations, but it also creates blind spots:
+• Value creation becomes undervalued
+• Pricing anchors to cost instead of outcomes
+• Features get prioritized based on internal efficiency
+• High-value opportunities go unmonetized
+
+This pattern is extremely common in engineering-heavy, customer-intensive, or legacy product organizations.`,
+                urgency: "Cost-driven organizations typically lose 15–25% margin because prices reflect effort—not customer value. Teams also over-deliver on low-value features and under-invest in value-driving ones.",
+                quickWin: "Map the value customers actually care about versus what it costs you to deliver. This reveals 2–3 immediate areas where you can stop overinvesting and start pricing based on outcomes.",
+                peerValidation: "CPOs with this pattern consistently find that anchoring on value—rather than effort—changes internal conversations and unlocks higher-margin pricing confidence.",
+                journey: [
+                    "Value Exchange Definition",
+                    "Customer & Market Insights",
+                    "Value Story & Positioning",
+                    "Offer & Monetization Basics",
+                    "Realization Check"
+                ]
+            },
+            M: {
+                name: "Market-Driven",
+                archetypeName: "The Market Navigator",
+                archetypeDescription: "Core drive: Follow demand, segments, and competitive signals.",
+                strength: "External awareness; market sensing.",
+                blindSpot: "Insight doesn't always convert into scalable monetization.",
+                startingPoint: "Market & Customer Segmentation",
+                theme: "Turn market insight into scalable monetization.",
+                whatThisMeans: `Your team is attuned to customers, competitors, and market signals—but monetization does not yet reflect this.
+
+Common signs include:
+• Strong insights that fail to translate into pricing
+• Packaging aligned to product logic, not market segments
+• Inconsistent segmentation
+• Growth engines stuck in generalization instead of differentiation`,
+                urgency: "Market-driven teams often leave 20–30% potential revenue uncaptured because they treat segments equally rather than monetizing based on value, willingness to pay, and adoption behavior.",
+                quickWin: "Identify your top two customer segments and map their willingness to pay to your current price. You'll immediately uncover opportunities to raise prices—or better match entry-level value for price-sensitive segments.",
+                peerValidation: "Product leaders with this pattern finally connect segmentation to monetization once they anchor in this starting point. It's the most reliable way to translate insight into revenue.",
+                journey: [
+                    "Market & Customer Segmentation",
+                    "Value Exchange Definition",
+                    "Offer & Monetization Architecture",
+                    "Adoption & Upgrade Paths",
+                    "Realization & Feedback Loop"
+                ]
+            },
+            V: {
+                name: "Value-Driven",
+                archetypeName: "The Value Architect",
+                archetypeDescription: "Core drive: Build value and align the product to meaningful outcomes.",
+                strength: "Strong product thinking and customer understanding.",
+                blindSpot: "Monetization structure, ROI articulation, clear pricing logic.",
+                startingPoint: "Pricing Logic & Value Story",
+                theme: "Capture more of the value you create.",
+                whatThisMeans: `Your team is strong at understanding and delivering value—but not at structuring, articulating, or pricing it.
+
+This typically shows up as:
+• Pricing that doesn't reflect the outcomes you create
+• Difficulty quantifying ROI
+• Inconsistent value messaging
+• Value metrics that don't map to how customers measure success`,
+                urgency: "Value-driven organizations often capture only 40–60% of the value they create due to weak articulation or unclear pricing logic.",
+                quickWin: "Document measurable outcomes your product delivers (time saved, revenue increased, cost reduced). Tie pricing directly to these outcomes. Most value-driven orgs can lift pricing by 15–30% simply by doing this.",
+                peerValidation: "Product leaders report that this is their \"unlock moment\"—where product thinking finally becomes monetization confidence.",
+                journey: [
+                    "Pricing Logic & Value Story",
+                    "Offer Structure & Value Metrics",
+                    "Plan & Packaging Design",
+                    "Realization & Adoption Levers",
+                    "Experiment & Optimize"
+                ]
+            },
+            R: {
+                name: "Reactive",
+                archetypeName: "The Revenue Responder",
+                archetypeDescription: "Core drive: Handle pressure, urgency, deals, renewals, escalations.",
+                strength: "Fast adaptation; flexible execution.",
+                blindSpot: "Inconsistent guardrails; leakage through discounts and firefighting.",
+                startingPoint: "Price Realization & Execution",
+                theme: "Replace firefighting with consistent value capture.",
+                whatThisMeans: `Your team reacts quickly—but inconsistently—to internal and external pressure:
+• Discounting
+• One-off deals
+• Competitor moves
+• Renewal escalations
+• Sales + CS friction
+
+The product may be strong, but execution is leaking revenue.`,
+                urgency: "Reactive patterns lose 25–40% of theoretical revenue due to inconsistent negotiations, unclear guardrails, and weak packaging hygiene.",
+                quickWin: "Audit your last 20 deals. Identify the discount patterns and leakage points. Then create simple discount guardrails and approval thresholds.",
+                peerValidation: "Organizations with reactive patterns often see improvement in 30–60 days once they implement execution guardrails.",
+                journey: [
+                    "Price Realization & Execution",
+                    "Offer Hygiene & Simplification",
+                    "Customer Value Communication",
+                    "Guardrails & Playbooks",
+                    "Feedback into Product & Model"
+                ]
+            },
+            S: {
+                name: "Systemic",
+                archetypeName: "The System Builder",
+                archetypeDescription: "Core drive: Align product, operations, and business model at scale.",
+                strength: "Systems thinking & alignment.",
+                blindSpot: "Monetization model lags product evolution.",
+                startingPoint: "Monetization Model Innovation",
+                theme: "Align your business model with product sophistication.",
+                whatThisMeans: `Your product capabilities have outgrown your business model.
+
+Monetization is creating friction or capping growth.
+
+Indicators:
+• Pricing model doesn't match value delivery
+• Operational gaps between product + GTM
+• Portfolio complexity limiting scale
+• Outdated model for a modern product`,
+                urgency: "Systemic patterns leave 30–50% growth untapped because the business model no longer reflects how value is consumed.",
+                quickWin: "Map product value delivery (consumption, outcomes, usage, time-to-value). Identify 1–2 areas where the current model creates friction. Consider hybrid, usage-based, or outcome-aligned pricing.",
+                peerValidation: "CPOs with systemic patterns say this is where they finally align product strategy and the business model—the unlock for scalable, modern monetization.",
+                journey: [
+                    "Monetization Model Innovation",
+                    "Portfolio & Packaging Alignment",
+                    "Value Metrics & Structure",
+                    "Operational Fit",
+                    "Scaling & Evolution"
+                ]
+            }
+        };
+        
+        function ProfitStreamDiagnostic() {
+            const [stage, setStage] = useState('landing'); // 'landing', 'intro', 'questions', 'email', 'analyzing', 'results'
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [email, setEmail] = useState('');
+            const [emailSubmitted, setEmailSubmitted] = useState(false);
+            const [result, setResult] = useState(null);
+            
+            // Load saved data on mount
+            useEffect(() => {
+                const saved = localStorage.getItem('profitStreamAnswers');
+                const savedEmail = localStorage.getItem('profitStreamEmail');
+                if (saved) {
+                    const parsedAnswers = JSON.parse(saved);
+                    setAnswers(parsedAnswers);
+                }
+                if (savedEmail) {
+                    setEmail(savedEmail);
+                    setEmailSubmitted(true);
+                }
+            }, []);
+            
+            // Save data whenever answers change
+            useEffect(() => {
+                localStorage.setItem('profitStreamAnswers', JSON.stringify(answers));
+            }, [answers]);
+            
+            const startDiagnostic = () => {
+                setStage('questions');
+            };
+            
+            const handleAnswer = (questionId, value) => {
+                setAnswers({ ...answers, [questionId]: value });
+            };
+            
+            // Drag and drop handlers for ranking question
+            const [draggedIndex, setDraggedIndex] = useState(null);
+            const [rankingOrder, setRankingOrder] = useState(() => {
+                // Initialize with saved order or default order
+                if (answers[6]) {
+                    const order = Object.entries(answers[6])
+                        .sort(([, rankA], [, rankB]) => rankA - rankB)
+                        .map(([index]) => parseInt(index));
+                    return order;
+                }
+                return [0, 1, 2, 3, 4]; // Default order
+            });
+            
+            useEffect(() => {
+                // Convert ranking order to answers format
+                if (stage === 'questions' && questions[currentQuestion]?.type === 'ranking') {
+                    const rankingAnswers = {};
+                    rankingOrder.forEach((itemIndex, position) => {
+                        rankingAnswers[itemIndex] = position + 1;
+                    });
+                    handleAnswer(6, rankingAnswers);
+                }
+            }, [rankingOrder, currentQuestion, stage]);
+            
+            const handleDragStart = (e, index) => {
+                setDraggedIndex(index);
+                e.dataTransfer.effectAllowed = 'move';
+                e.currentTarget.style.opacity = '0.5';
+            };
+            
+            const handleDragEnd = (e) => {
+                e.currentTarget.style.opacity = '1';
+                setDraggedIndex(null);
+            };
+            
+            const handleDragOver = (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+            };
+            
+            const handleDrop = (e, dropIndex) => {
+                e.preventDefault();
+                
+                if (draggedIndex === null || draggedIndex === dropIndex) return;
+                
+                const newOrder = [...rankingOrder];
+                const draggedItem = newOrder[draggedIndex];
+                
+                // Remove from old position
+                newOrder.splice(draggedIndex, 1);
+                // Insert at new position
+                newOrder.splice(dropIndex, 0, draggedItem);
+                
+                setRankingOrder(newOrder);
+            };
+            
+            const handleNext = () => {
+                if (currentQuestion < questions.length - 1) {
+                    setCurrentQuestion(currentQuestion + 1);
+                } else {
+                    // After last question, show email capture
+                    setStage('email');
+                }
+            };
+            
+            const handleBack = () => {
+                if (currentQuestion > 0) {
+                    setCurrentQuestion(currentQuestion - 1);
+                }
+            };
+            
+            const handleEmailSubmit = () => {
+                if (email && email.includes('@')) {
+                    localStorage.setItem('profitStreamEmail', email);
+                    setEmailSubmitted(true);
+                    proceedToResults();
+                }
+            };
+            
+            const skipEmail = () => {
+                proceedToResults();
+            };
+            
+            const proceedToResults = () => {
+                setStage('analyzing');
+                // Show analyzing screen for 2 seconds
+                setTimeout(() => {
+                    calculateResults();
+                }, 2000);
+            };
+            
+            const calculateResults = () => {
+                const scores = { C: 0, M: 0, V: 0, R: 0, S: 0 };
+                
+                // Questions 1-5: 2 points each
+                for (let i = 1; i <= 5; i++) {
+                    if (answers[i] !== undefined) {
+                        const question = questions[i - 1];
+                        const category = question.options[answers[i]].category;
+                        scores[category] += 2;
+                    }
+                }
+                
+                // Question 6: Ranked (5 to 1 points)
+                if (answers[6]) {
+                    Object.entries(answers[6]).forEach(([optionIndex, rank]) => {
+                        const category = questions[5].options[optionIndex].category;
+                        const points = 6 - rank;
+                        scores[category] += points;
+                    });
+                }
+                
+                // Question 7: 2 points
+                if (answers[7] !== undefined) {
+                    const category = questions[6].options[answers[7]].category;
+                    scores[category] += 2;
+                }
+                
+                // Find winner
+                let maxScore = 0;
+                let winner = null;
+                Object.entries(scores).forEach(([category, score]) => {
+                    if (score > maxScore) {
+                        maxScore = score;
+                        winner = category;
+                    }
+                });
+                
+                setResult({ category: winner, scores });
+                setStage('results');
+            };
+            
+            const resetDiagnostic = () => {
+                setAnswers({});
+                setCurrentQuestion(0);
+                setStage('landing');
+                setResult(null);
+                setEmail('');
+                setEmailSubmitted(false);
+                localStorage.removeItem('profitStreamAnswers');
+                localStorage.removeItem('profitStreamEmail');
+            };
+            
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            const currentQ = questions[currentQuestion];
+            const isAnswered = currentQ?.type === 'ranking' ? true : answers[currentQ?.id] !== undefined;
+            
+            // Landing Screen (before intro)
+            if (stage === 'landing') {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>Profit Stream Diagnostic™</h1>
+                            <p>Understand how your team makes pricing and packaging decisions</p>
+                        </div>
+                        
+                        <div className="content">
+                            <div className="landing-section">
+                                <div className="landing-hero">
+                                    <h2 className="landing-title">Discover How Your Product Organization Actually Makes Monetization Decisions</h2>
+                                    <p className="landing-subtitle">
+                                        This 7-question diagnostic identifies your team's dominant decision pattern around product value, offers, and growth — and shows you exactly where to start improving it.
+                                    </p>
+                                </div>
+                                
+                                <div className="landing-grid">
+                                    <div className="landing-card">
+                                        <div className="landing-card-icon">📊</div>
+                                        <h3 className="landing-card-title">What You'll Get</h3>
+                                        <p className="landing-card-text">
+                                            Your dominant decision pattern (Cost-Driven, Market-Driven, Value-Driven, Reactive, or Systemic) and a personalized 5-step roadmap through the Profit Stream Canvas.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="landing-card">
+                                        <div className="landing-card-icon">⏱️</div>
+                                        <h3 className="landing-card-title">Time Required</h3>
+                                        <p className="landing-card-text">
+                                            3 minutes. Answer based on instinct, not analysis. The first response is usually the most accurate reflection of your organization's actual behavior.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="landing-card">
+                                        <div className="landing-card-icon">🎯</div>
+                                        <h3 className="landing-card-title">Best For</h3>
+                                        <p className="landing-card-text">
+                                            CPOs, VPs of Product, Heads of Product, and monetization leaders in B2B SaaS and data-driven businesses looking to align teams around pricing strategy.
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="landing-card">
+                                        <div className="landing-card-icon">💡</div>
+                                        <h3 className="landing-card-title">What You'll Learn</h3>
+                                        <p className="landing-card-text">
+                                            Where your team has clarity and confidence, where inconsistencies create friction, and which specific steps will unlock better packaging, growth, and margin decisions.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div className="landing-cta">
+                                    <button className="btn btn-primary btn-large" onClick={() => setStage('intro')}>
+                                        Start Your Diagnostic
+                                    </button>
+                                    <p className="landing-cta-note">No sign-up required • Results delivered immediately</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            // Intro Screen
+            if (stage === 'intro') {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>Profit Stream Diagnostic™</h1>
+                            <p>Identify where profit is leaking—and get your roadmap to fix it</p>
+                            <div className="trust-badge">Trusted by 500+ product leaders</div>
+                        </div>
+                        
+                        <div className="content">
+                            <div className="intro-section">
+                                <div className="intro-icon">🎯</div>
+                                <h2 className="intro-title">
+                                    Most product teams don't design their monetization system — they grow into it
+                                </h2>
+                                
+                                <div className="intro-text">
+                                    Your product creates value. But if growth has slowed, margins are shrinking, or teams can't align on pricing—your monetization system is leaking profit.
+                                    <br /><br />
+                                    This short diagnostic captures how monetization decisions actually get made inside your product organization today. It's not a deep analysis. There are no right or wrong answers. Go with your first instinct — that's what reveals the real pattern. You'll get a clear starting point on the Profit Stream Canvas and a guided path to improve it. Your responses are confidential and used only to generate your results.
+                                </div>
+                                
+                                <div className="intro-benefits">
+                                    <div className="benefit-item">
+                                        <div className="benefit-icon">⚡</div>
+                                        <div className="benefit-text">
+                                            <div className="benefit-title">Fast & Focused</div>
+                                            <div className="benefit-description">7 diagnostic questions, 3 minutes, personalized results</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="benefit-item">
+                                        <div className="benefit-icon">🎯</div>
+                                        <div className="benefit-text">
+                                            <div className="benefit-title">Your Starting Point</div>
+                                            <div className="benefit-description">Know exactly where to begin based on how your team thinks today</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="benefit-item">
+                                        <div className="benefit-icon">🗺️</div>
+                                        <div className="benefit-text">
+                                            <div className="benefit-title">Guided Journey</div>
+                                            <div className="benefit-description">A proven step-by-step path through the Profit Stream Canvas</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="benefit-item">
+                                        <div className="benefit-icon">💡</div>
+                                        <div className="benefit-text">
+                                            <div className="benefit-title">Actionable Insights</div>
+                                            <div className="benefit-description">Know what's costing you revenue and your fastest path to impact</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="intro-stats">
+                                    <div className="stat-item">
+                                        <div className="stat-number">3</div>
+                                        <div className="stat-label">minutes</div>
+                                    </div>
+                                    <div className="stat-item">
+                                        <div className="stat-number">7</div>
+                                        <div className="stat-label">questions</div>
+                                    </div>
+                                    <div className="stat-item">
+                                        <div className="stat-number">5</div>
+                                        <div className="stat-label">step roadmap</div>
+                                    </div>
+                                </div>
+                                
+                                <button className="btn btn-primary" onClick={startDiagnostic} style={{ width: '100%', marginTop: '20px' }}>
+                                    Start Your Diagnostic
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            // Email Capture Screen
+            if (stage === 'email') {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>Profit Stream Diagnostic™</h1>
+                            <p>Your results are ready</p>
+                        </div>
+                        
+                        <div className="content">
+                            <div className="intro-section">
+                                <div className="intro-icon">📧</div>
+                                <div className="email-capture">
+                                    <div className="email-capture-title">Want your results emailed to you?</div>
+                                    <div className="email-capture-text">
+                                        Get your personalized Profit Stream roadmap delivered to your inbox. No spam, just your results.
+                                    </div>
+                                    
+                                    <div className="email-input-group">
+                                        <input 
+                                            type="email" 
+                                            className="email-input"
+                                            placeholder="your.email@company.com"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleEmailSubmit()}
+                                        />
+                                        <button className="email-submit" onClick={handleEmailSubmit}>
+                                            Send Results
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="email-skip" onClick={skipEmail}>
+                                        Skip, just show me my results
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            // Analyzing Screen
+            if (stage === 'analyzing') {
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>Profit Stream Diagnostic™</h1>
+                            <p>Processing your responses</p>
+                        </div>
+                        
+                        <div className="content">
+                            <div className="analyzing-screen">
+                                <div className="analyzing-spinner"></div>
+                                <div className="analyzing-text">Analyzing your monetization pattern...</div>
+                                <div className="analyzing-subtext">Mapping your organization's decision profile</div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            // Results Screen
+            if (stage === 'results' && result) {
+                const categoryData = categoryInfo[result.category];
+                
+                return (
+                    <div className="container">
+                        <div className="header">
+                            <h1>Your Diagnostic Results</h1>
+                            <p>Your team's monetization pattern and transformation roadmap</p>
+                        </div>
+                        
+                        <div className="content">
+                            <div className="results-section">
+                                {/* Archetype Header */}
+                                <div className="results-header">
+                                    <div className="results-category">{categoryData.name}</div>
+                                    <h2 className="results-title">{categoryData.archetypeName || categoryData.startingPoint}</h2>
+                                </div>
+                                
+                                {/* What This Means */}
+                                {categoryData.whatThisMeans && (
+                                    <div className="results-main-section">
+                                        <h3 className="results-section-title">What This Means</h3>
+                                        <div style={{ fontSize: '15px', color: '#4a5568', lineHeight: '1.7' }}>
+                                            {categoryData.whatThisMeans.split('\n\n').map((section, idx) => {
+                                                const lines = section.split('\n');
+                                                return (
+                                                    <div key={idx} style={{ marginBottom: idx < categoryData.whatThisMeans.split('\n\n').length - 1 ? '15px' : '0' }}>
+                                                        {lines.map((line, lineIdx) => {
+                                                            const trimmed = line.trim();
+                                                            if (!trimmed) return null;
+                                                            
+                                                            if (trimmed.includes('Common signs include:') || 
+                                                                trimmed.includes('This stabilizes operations,') ||
+                                                                trimmed.includes('This typically shows up as:') ||
+                                                                trimmed.includes('Indicators:') ||
+                                                                trimmed.includes('Your team reacts quickly') ||
+                                                                trimmed.includes('Monetization is creating friction') ||
+                                                                trimmed.includes('The product may be strong')) {
+                                                                return <div key={lineIdx} style={{ marginBottom: '8px' }}><strong>{trimmed}</strong></div>;
+                                                            }
+                                                            
+                                                            return <div key={lineIdx} style={{ marginBottom: lineIdx < lines.length - 1 ? '5px' : '0' }}>{trimmed}</div>;
+                                                        })}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* What's Costing You Revenue */}
+                                <div className="results-main-section">
+                                    <h3 className="results-section-title">What's Costing You Revenue</h3>
+                                    <p style={{ fontSize: '15px', color: '#4a5568', lineHeight: '1.7', margin: 0 }}>
+                                        {categoryData.urgency}
+                                    </p>
+                                </div>
+                                
+                                {/* Core Driver Info Grid */}
+                                {categoryData.archetypeName && (
+                                    <div className="core-driver-section">
+                                        <div className="core-driver-grid">
+                                            <div className="core-driver-item">
+                                                <div className="core-driver-label">Core Driver</div>
+                                                <div className="core-driver-value">{categoryData.archetypeDescription.replace('Core drive: ', '')}</div>
+                                            </div>
+                                            <div className="core-driver-item">
+                                                <div className="core-driver-label">Strength</div>
+                                                <div className="core-driver-value">{categoryData.strength}</div>
+                                            </div>
+                                            <div className="core-driver-item">
+                                                <div className="core-driver-label">Blind Spot</div>
+                                                <div className="core-driver-value">{categoryData.blindSpot}</div>
+                                            </div>
+                                            <div className="core-driver-item">
+                                                <div className="core-driver-label">Your Starting Point</div>
+                                                <div className="core-driver-value">{categoryData.startingPoint}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* Your Fastest Win */}
+                                <div className="quick-win-highlight">
+                                    <div className="quick-win-icon">⚡</div>
+                                    <div>
+                                        <h4 className="quick-win-title-inline">Your Fastest Win</h4>
+                                        <p className="quick-win-text-inline">{categoryData.quickWin}</p>
+                                    </div>
+                                </div>
+                                
+                                {/* Peer Perspective */}
+                                <div className="peer-box">
+                                    <div className="peer-icon">👥</div>
+                                    <div>
+                                        <h4 className="peer-title-inline">Peer Perspective</h4>
+                                        <p className="peer-text-inline">{categoryData.peerValidation}</p>
+                                    </div>
+                                </div>
+                                
+                                {/* Roadmap with Canvas Visualization */}
+                                <div className="roadmap-section">
+                                    <h3 className="roadmap-title">Your 5-Step Transformation Roadmap</h3>
+                                    <p className="roadmap-subtitle">
+                                        This sequence represents your guided path through the Profit Stream Canvas. Each step builds on the previous one to create sustainable monetization improvement.
+                                    </p>
+                                    
+                                    <div className="canvas-visual">
+                                        {categoryData.journey.map((step, index) => (
+                                            <React.Fragment key={index}>
+                                                <div className="canvas-step">
+                                                    <div className="canvas-step-header">
+                                                        <div className="canvas-step-number">{index + 1}</div>
+                                                        <div className="canvas-step-title">{step}</div>
+                                                        {index === 0 && <div className="canvas-start-badge">START HERE</div>}
+                                                    </div>
+                                                    <div className="canvas-step-description">
+                                                        {getStepDescription(step, categoryData.name)}
+                                                    </div>
+                                                </div>
+                                                {index < categoryData.journey.length - 1 && (
+                                                    <div className="canvas-arrow">↓</div>
+                                                )}
+                                            </React.Fragment>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                <div className="retake-section">
+                                    <button className="btn btn-primary" onClick={resetDiagnostic}>
+                                        Run New Diagnostic
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            // Questions Screen
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>Profit Stream Diagnostic™</h1>
+                        <p>Identify where profit is leaking—and get your roadmap to fix it</p>
+                    </div>
+                    
+                    <div className="progress-container">
+                        <div className="progress-bar">
+                            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="progress-text">
+                            Question {currentQuestion + 1} of {questions.length}
+                        </div>
+                    </div>
+                    
+                    <div className="content">
+                        <div className="question-section">
+                            <h2 className="question-title">{currentQ.title}</h2>
+                            <p className="question-subtitle">{currentQ.question}</p>
+                            <p className="question-reassurance">Choose the option that most reflects your team's instinctive response. No wrong answers—this maps where you are today.</p>
+                            
+                            {currentQ.type === 'ranking' ? (
+                                <div className="ranking-section">
+                                    <div className="ranking-instruction">
+                                        <div className="ranking-instruction-icon">👆</div>
+                                        <div>Drag and drop to reorder by priority (1 = most important, 5 = least important)</div>
+                                    </div>
+                                    {rankingOrder.map((itemIndex, position) => {
+                                        const option = currentQ.options[itemIndex];
+                                        const optionLetter = String.fromCharCode(65 + itemIndex); // A, B, C, D, E
+                                        return (
+                                            <div key={itemIndex} className="ranking-row">
+                                                <div className="rank-number-outside">{position + 1}</div>
+                                                <div 
+                                                    className={`ranking-item ${draggedIndex === position ? 'dragging' : ''}`}
+                                                    draggable="true"
+                                                    onDragStart={(e) => handleDragStart(e, position)}
+                                                    onDragEnd={handleDragEnd}
+                                                    onDragOver={handleDragOver}
+                                                    onDrop={(e) => handleDrop(e, position)}
+                                                >
+                                                    <div className="drag-handle">⋮⋮</div>
+                                                    <div className="option-letter">{optionLetter}</div>
+                                                    <div className="ranking-item-text">{option.text}</div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                currentQ.options.map((option, index) => (
+                                    <div 
+                                        key={index}
+                                        className={`option ${answers[currentQ.id] === index ? 'selected' : ''}`}
+                                        onClick={() => handleAnswer(currentQ.id, index)}
+                                    >
+                                        <div className="option-radio"></div>
+                                        <div className="option-text">{option.text}</div>
+                                    </div>
+                                ))
+                            )}
+                            
+                            <div className="buttons">
+                                {currentQuestion > 0 && (
+                                    <button className="btn btn-secondary" onClick={handleBack}>
+                                        Back
+                                    </button>
+                                )}
+                                <button 
+                                    className="btn btn-primary" 
+                                    onClick={handleNext}
+                                    disabled={!isAnswered && currentQ.type !== 'ranking'}
+                                >
+                                    {currentQuestion === questions.length - 1 ? 'See Results' : 'Next'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        // Helper function to provide context for each roadmap step
+        function getStepDescription(step, pattern) {
+            const descriptions = {
+                'Value Exchange Definition': 'Define what customers value vs. what it costs to deliver. This creates the foundation for value-based pricing decisions.',
+                'Customer & Market Insights': 'Understand customer segments, willingness to pay, and competitive positioning to inform packaging strategy.',
+                'Value Story & Positioning': 'Articulate the measurable outcomes your product delivers and how it maps to customer success.',
+                'Offer & Monetization Basics': 'Structure your product offering with clear tiers, features, and pricing aligned to value delivery.',
+                'Realization Check': 'Ensure your pricing model translates into consistent revenue capture in actual deals.',
+                'Market & Customer Segmentation': 'Identify and prioritize customer segments based on value, fit, and willingness to pay.',
+                'Offer & Monetization Architecture': 'Design packaging and pricing structure that differentiates by segment and use case.',
+                'Adoption & Upgrade Paths': 'Create clear product-led growth journeys that move customers from entry to expansion.',
+                'Realization & Feedback Loop': 'Implement systems to capture revenue consistently and feed insights back to product strategy.',
+                'Pricing Logic & Value Story': 'Connect pricing directly to measurable customer outcomes and ROI.',
+                'Offer Structure & Value Metrics': 'Align your pricing model to how customers measure success and consume value.',
+                'Plan & Packaging Design': 'Create pricing tiers that reflect different customer needs and value realization patterns.',
+                'Realization & Adoption Levers': 'Implement tactics that convert interest into revenue and drive product usage.',
+                'Experiment & Optimize': 'Build testing frameworks to continuously improve pricing, packaging, and monetization effectiveness.',
+                'Price Realization & Execution': 'Stop revenue leakage through discount controls, approval workflows, and deal hygiene.',
+                'Offer Hygiene & Simplification': 'Clean up inconsistent pricing, eliminate orphaned SKUs, and standardize your offer.',
+                'Customer Value Communication': 'Train teams to articulate value consistently and handle pricing conversations confidently.',
+                'Guardrails & Playbooks': 'Document decision frameworks, approval thresholds, and pricing policies that scale.',
+                'Feedback into Product & Model': 'Create feedback loops from deals to product strategy to improve future monetization.',
+                'Monetization Model Innovation': 'Redesign how you charge to match how customers consume and realize value.',
+                'Portfolio & Packaging Alignment': 'Rationalize product lines and create coherent packaging across the portfolio.',
+                'Value Metrics & Structure': 'Define usage, consumption, or outcome metrics that drive fair and scalable pricing.',
+                'Operational Fit': 'Ensure systems, processes, and teams can support your monetization model at scale.',
+                'Scaling & Evolution': 'Build mechanisms to evolve your business model as product capabilities and markets mature.'
+            };
+            
+            return descriptions[step] || 'Critical step in your monetization transformation journey.';
+        }
+        
+        ReactDOM.render(<ProfitStreamDiagnostic />, document.getElementById('root'));
+    </script>
+</body>
+</html>
